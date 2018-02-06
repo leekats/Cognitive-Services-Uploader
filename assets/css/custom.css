@@ -4,6 +4,15 @@ html {
     background-image: url("/assets/img/header_bg.jpg");
 }
 
+@font-face {
+    font-family: 'OCR_OneCTT';
+    font-style: normal;
+    font-weight: 400;
+    src: local('OCR_OneCTT'), local('OCR_OneCTT-Regular'),
+        url(https://allfont.ru/cache/fonts/ocr_onectt_e0c949b5146d7749fc6b990d1ddc9cae.woff) format('woff'),
+        url(https://allfont.ru/cache/fonts/ocr_onectt_e0c949b5146d7749fc6b990d1ddc9cae.ttf) format('truetype');
+}
+
 .cameragif {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);

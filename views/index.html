@@ -6,10 +6,8 @@
     <title>Trump</title>
     <!-- Meta -->
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="assets/js/ang.js"></script>
     <!-- Favicon -->
@@ -20,8 +18,6 @@
     <!-- Google Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300" type="text/css" rel="stylesheet">
-    <link href="https://allfont.net/allfont.css?fonts=ocr_onectt" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body ng-app="incognitive">
@@ -30,15 +26,15 @@
             <img src="assets/img/cam.gif">
         </div>
         <div class="inp">
-            <input type="text" placeholder="Enter Image URL" ng-model="imgInput" ng-keypress="($event.charCode==13)? doMagic() : return">           
+            <input type="text" placeholder="Enter Image URL" ng-model="imgInput" ng-keypress="($event.charCode==13)? doMagic() : return">
             <br>
             <br>
             <div style="position:absolute;color:#c40404;">
-                    {{text}}
+                {{text}}
             </div>
         </div>
         <div class="pic">
-            <img ng-src="{{showImage()}}" style="max-width: 300px; max-height: 250px; position:absolute;"/>
+            <img ng-src="{{showImage()}}" style="max-width: 300px; max-height: 250px; position:absolute;" />
         </div>
     </div>
 </body>
