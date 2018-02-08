@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var ctrl = require('../controllers/detect.js');
+var detect = require('../controllers/detect.js');
+var upload = require('../controllers/upload.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,7 +11,11 @@ router.get('/', function(req, res, next) {
 router.get('/data', function(req, res, next) {
   res.send("gg");
 });
-router.route('/detect').post(ctrl.detectPOST);
+
+router.route('/detect').post(detect.detectPOST);
+
+router.route('/upload').post(upload.up);
+
 //router.route('/identify').post(ctrl.identifyPOST);
 
 router.get('*',function (req, res) {

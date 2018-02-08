@@ -9,6 +9,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+exports.upload = function(req,res) {
+    res.send("asd");
+}
+
 exports.detectPOST = function(req, res) {
 
     if (req.body.ur == "") {
