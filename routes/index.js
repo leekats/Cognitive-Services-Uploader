@@ -14,9 +14,7 @@ router.get('/data', function(req, res, next) {
 
 router.route('/detect').post(detect.detectPOST);
 
-router.route('/upload').post(upload.up);
-
-//router.route('/identify').post(ctrl.identifyPOST);
+//router.route('/upload').post(upload.up);
 
 router.get('*',function (req, res) {
   res.redirect('/');
