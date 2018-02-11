@@ -11,18 +11,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var uriStart = "file:///"
 var dir = 'C:\\someimages\\';
 var groupid = "test";
+var keyDir = "D:\\home\\site\\wwwroot\\key.txt";
 
 exports.up = function(req,res) {
     var files = fs.readdirSync(dir);
     for (var i = 0; i < files.length; i++) {
         sleep(250);
-        console.log("---------");
         var pathToImg = dir + files[i];
         addToGroup(pathToImg, files[i].split(".")[0]);
-        console.log("---------");
     }
     res.send("sent");
 }
@@ -62,7 +60,7 @@ function addAFace(uri, personid){
 }
 
 function getKey() {
-    return(fs.readFileSync("C:\\key.txt", 'utf8', function(err, data) {
+    return(fs.readFileSync(keyDir, 'utf8', function(err, data) {
         if (err) throw err;
             return data;
     }));
