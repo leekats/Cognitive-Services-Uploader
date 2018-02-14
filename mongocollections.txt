@@ -1,0 +1,12 @@
+UPLOAD - ERRORS (Person & Face error logging)
+ID : ERROR
+
+UPLOAD - SUCCESS
+ID : PERSON ID
+
+
+DETECT - NOT DETECTED (Couldn't detect a face from image)
+IMG_ID
+
+IDENTIFY - INFO (Results of the identify function, for every image)
+IMG_ID : 0/1/personId (0-no Face, 1-not found)

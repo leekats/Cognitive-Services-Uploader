@@ -12,9 +12,9 @@ router.get('/data', function(req, res, next) {
   res.send("gg");
 });
 
-router.route('/detect').post(detect.detectPOST);
+router.route('/detect').post(detect.detectFolder);
 
-//router.route('/upload').post(upload.up);
+router.route('/upload').post(upload.up);
 
 router.get('*',function (req, res) {
   res.redirect('/');
