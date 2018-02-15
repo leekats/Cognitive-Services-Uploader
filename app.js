@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs')
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var mongoose = require('mongoose');
 var app = express();
 
 // view engine setup
@@ -24,19 +24,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'assets')));
 
-app.use('/assets',express.static(path.join(__dirname, 'assets')));
+mongoose.connect('mongodb://localhost/incognitive', function (err) {
+  if (err) {
+    console.log("Error connecting to DB");
+  } else {
+    console.log("Connected to DB");
+  }
+});
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/', index);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

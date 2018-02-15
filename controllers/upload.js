@@ -1,4 +1,5 @@
 var sleep = require('system-sleep');
+var mongoose = require('mongoose');
 var express = require('express');
 var request = require('request');
 var app = express();
@@ -11,6 +12,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+// DB Models
+var UploadErrorMDL = require('../models/UploadErrors');
+var UploadPersonMDL = require('../models/UploadPersonId');
+var UPERR;
+var UPINF;
+
+// Controller Variables
 var dir = 'C:\\someimages3\\';  // Where the images are stored
 var groupid = "test";           // Group's name
 var timeOut = 300;              // The time to wait between calls
@@ -21,6 +29,9 @@ var keyDir = "C:\\key.txt"      // Where the key is stored
     Goes through a folder and for each file, executes
     CreatePeroson -> AddAFace */
 exports.up = function (req, res) {
+    var dt = new Date().getTime();
+    UPERR = mongoose.model(dt + " UPERR", UploadErrorMDL);
+    UPINF = mongoose.model(dt + " UPINF", UploadPersonMDL);
     var files = fs.readdirSync(dir);
     for (var i = 0; i < files.length; i++) {
         sleep(timeOut);
@@ -51,9 +62,12 @@ function CreatePerson(uri, personName) {
     request.post(opts, function (error, response, body) {
         sleep(100);
         if (!(body.personId)) {
+            var errr = new UPERR({picId:personName,err:'Error creating person'});
+            errr.save();
             console.log(personName + " : Error creating person")
         } else {
-            console.log(personName + " : " + body.personId);
+            var inf = new UPINF({picId:personName,personId:body.personId});
+            inf.save();
             addAFace(uri, body.personId, personName);
         }
     });
@@ -75,10 +89,10 @@ function addAFace(uri, personid, personName) {
     }
 
     request.post(opts, function (error, response, body) {
-        if (JSON.parse(body).persistedFaceId) {
-            console.log(personName + " : Added face");
-        } else {
-            console.log("Error adding face")
+        if (!(JSON.parse(body).persistedFaceId)) {
+            var errr = new UPERR({picId:personName,err:'Error adding face'});
+            errr.save();
+            console.log(personName + " Error adding face");
         }
     });
 }
