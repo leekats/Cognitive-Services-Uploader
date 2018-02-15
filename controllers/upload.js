@@ -11,12 +11,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var dir = 'C:\\someimages3\\';
-var groupid = "test";
-var timeOut = 300;
-var keyDir = "C:\\key.txt"
+var dir = 'C:\\someimages3\\';  // Where the images are stored
+var groupid = "test";           // Group's name
+var timeOut = 300;              // The time to wait between calls
+var keyDir = "C:\\key.txt"      // Where the key is stored
 //var keyDir = "D:\\home\\site\\wwwroot\\key.txt";
 
+/*  The function gets called upon POST on /upload
+    Goes through a folder and for each file, executes
+    CreatePeroson -> AddAFace */
 exports.up = function (req, res) {
     var files = fs.readdirSync(dir);
     for (var i = 0; i < files.length; i++) {
@@ -27,6 +30,11 @@ exports.up = function (req, res) {
     res.send("sent");
 }
 
+/*  Creates a Person for each picture,
+    With person name = picture id
+    Upon successful creation, calls AddAFace 
+    * uri        = Local URL of the picture (needed for AddAFace)
+    * personName = person's ID */
 function CreatePerson(uri, personName) {
     var u = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/' + groupid + '/persons/';
     var opts = {
@@ -51,6 +59,10 @@ function CreatePerson(uri, personName) {
     });
 }
 
+/*  Adds a face to a person
+    * uri        = Local URL of the picture to upload
+    * personid   = PersonID to add his face
+    * personName = The ID of the real person */
 function addAFace(uri, personid, personName) {
     var u = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/' + groupid + '/persons/' + personid + '/persistedFaces/';
     var opts = {
@@ -71,6 +83,8 @@ function addAFace(uri, personid, personName) {
     });
 }
 
+
+// Gets the sub key from the local machine
 function getKey() {
     return (fs.readFileSync(keyDir, 'utf8', function (err, data) {
         if (err) throw err;

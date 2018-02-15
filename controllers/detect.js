@@ -11,13 +11,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var confidence = 0.5;
-var resp;
-var dir = 'C:\\catches\\';
-var timeOut = 300;
-var keyDir = "C:\\key.txt"
+var confidence = 0.5;       // Confidence of the Identification
+var resp;                   // Response object
+var dir = 'C:\\catches\\';  // The directory of the images to detect
+var timeOut = 300;          // The time to wait between calls
+var keyDir = "C:\\key.txt"  // Where the key is stored
 //var keyDir = "D:\\home\\site\\wwwroot\\key.txt";
 
+/*  The function gets called upon POST on /detectFolder
+    It runs through a folder and executes detectBinary,
+    For each file in the folder */
 exports.detectFolder = function (req, res) {
     try {
         var files = fs.readdirSync(dir);
@@ -32,6 +35,10 @@ exports.detectFolder = function (req, res) {
     res.send("sent");
 }
 
+/*  Detects a face from a given binary picture
+    On successfull face detection, calls identify
+    * uri = Local URL of the picture
+    * id  = File name */
 function detectBinary(uri, id) {
     var u = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true';
     var opts = {
@@ -42,10 +49,11 @@ function detectBinary(uri, id) {
         },
         body: fs.readFileSync(uri)
     }
-
     request.post(opts, function (error, response, body) {
+        // If no face detected
         if (body == '[]') {
             console.log(id + " : " + "NO FACE");
+        // Calls identify if we detected a face
         } else {
             console.log(id + " : " + JSON.parse(body)[0].faceId);
             identify(JSON.parse(body)[0].faceId, id);
@@ -53,6 +61,9 @@ function detectBinary(uri, id) {
     });
 }
 
+/*  Identifies a face from given faceId
+    * faceId = given faceId of the person
+    * id     = Filename */
 function identify(faceId, id) {
     var u = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/identify'
     var opts = {
@@ -72,16 +83,20 @@ function identify(faceId, id) {
         json: true
     }
     request.post(opts, function (error, response, body) {
+        // If the face isn't in the group
         if (!(body[0].candidates[0])) {
             //resp.send("No faces matching");
             console.log(id + " : No faces matching");
+        // If the face is in the group
         } else {
             //resp.send(response.body[0].candidates);
-            console.log(id + " : " + body[0].candidates[0].personId);//[0].candidates + " : " + id);
+            console.log(id + " : " + body[0].candidates[0].personId);
         }
     });
 }
 
+/*  The function gets called upon POST on /detectURL
+    It checks if the image is valid, and calls detect */
 exports.detectURL = function (req, res) {
     resp = res;
     if (req.body.ur == "") {
@@ -97,6 +112,7 @@ exports.detectURL = function (req, res) {
     }
 };
 
+//  Detects a face from given URL
 function detect(uri) {
     var u = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true'
     var opts = {
@@ -116,7 +132,7 @@ function detect(uri) {
     });
 };
 
-
+// Gets the sub key from the local machine
 function getKey() {
     return (fs.readFileSync(keyDir, 'utf8', function (err, data) {
         if (err) throw err;

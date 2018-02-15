@@ -1,3 +1,4 @@
+--- TABLE PER UPLOAD (DATE) ---
 UPLOAD - ERRORS (Person & Face error logging)
 ID : ERROR
 
@@ -5,6 +6,7 @@ UPLOAD - SUCCESS
 ID : PERSON ID
 
 
+--- TABLE PER DETECTION CYCLE (DATE) ---
 DETECT - NOT DETECTED (Couldn't detect a face from image)
 IMG_ID
 

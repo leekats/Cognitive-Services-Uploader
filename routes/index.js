@@ -12,7 +12,8 @@ router.get('/data', function(req, res, next) {
   res.send("gg");
 });
 
-router.route('/detect').post(detect.detectFolder);
+router.route('/detectFolder').post(detect.detectFolder);
+router.route('/detectURL').post(detect.detectURL);
 
 router.route('/upload').post(upload.up);
 
