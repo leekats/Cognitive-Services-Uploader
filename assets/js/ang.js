@@ -22,3 +22,11 @@ app.controller('ctr', function ($scope, $http) {
         }).then(function (data) {$scope.text = data.data;})
     }
 });
+
+app.controller('rep', function ($scope, $http) {
+    $scope.res;
+    $http({
+        url: '/stats',
+        method: "GET"
+    }).then(function (data) {$scope.res = data.data;})
+});

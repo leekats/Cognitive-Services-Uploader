@@ -19,7 +19,7 @@ var UPERR;
 var UPINF;
 
 // Controller Variables
-var dir = 'C:\\someimages3\\';  // Where the images are stored
+var dir = 'C:\\someimages4\\';  // Where the images are stored
 var groupid = "test";           // Group's name
 var timeOut = 300;              // The time to wait between calls
 var keyDir = "C:\\key.txt"      // Where the key is stored
@@ -31,7 +31,7 @@ var keyDir = "C:\\key.txt"      // Where the key is stored
 exports.up = function (req, res) {
     var dt = new Date().getTime();
     UPERR = mongoose.model(dt + " UPERR", UploadErrorMDL);
-    UPINF = mongoose.model(dt + " UPINF", UploadPersonMDL);
+    UPINF = mongoose.model("1518957136635 upinfs", UploadPersonMDL);
     var files = fs.readdirSync(dir);
     for (var i = 0; i < files.length; i++) {
         sleep(timeOut);
